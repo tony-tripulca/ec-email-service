@@ -28,11 +28,11 @@ export default {
    * @param {*} table
    * @returns
    */
-  select: async (table, username) => {
+  select: async (table, email) => {
     const collection = database.collection(table);
     const cursor = collection.find({
       active: { $eq: true },
-      username: { $eq: username },
+      email: { $eq: email },
     });
 
     let results = [];

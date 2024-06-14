@@ -10,16 +10,14 @@ export default {
    * @param {*} res
    */
   list: (req, res) => {
-    let validation = Validator.check([
-      Validator.required(req.query, "username"),
-    ]);
+    let validation = Validator.check([Validator.required(req.query, "email")]);
 
     if (!validation.pass) {
       Logger.error([JSON.stringify(validation)]);
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.select("orders", req.query.username)
+    MongodbService.select("orders", req.query.email)
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
         Logger.out([JSON.stringify(msg)]);
@@ -38,7 +36,7 @@ export default {
    */
   create: (req, res) => {
     let validation = Validator.check([
-      Validator.required(req.body, "username"),
+      Validator.required(req.body, "email"),
       Validator.required(req.body, "name"),
       Validator.required(req.body, "description"),
       Validator.required(req.body, "amount"),
@@ -50,7 +48,7 @@ export default {
     }
 
     MongodbService.insert("orders", {
-      username: req.body.username,
+      email: req.body.email,
       name: req.body.name,
       description: req.body.description,
       amount: req.body.amount,
@@ -165,9 +163,7 @@ export default {
      * 2. paid
      */
 
-    let validation = Validator.check([
-      Validator.required(req.query, "username"),
-    ]);
+    let validation = Validator.check([Validator.required(req.query, "email")]);
 
     if (!validation.pass) {
       Logger.error([JSON.stringify(validation)]);
@@ -175,7 +171,7 @@ export default {
     }
 
     try {
-      let orders = await MongodbService.select("orders", req.query.username);
+      let orders = await MongodbService.select("orders", req.query.email);
       let results = [];
 
       orders.forEach(async (order) => {
