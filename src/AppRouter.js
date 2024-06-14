@@ -14,6 +14,8 @@ app.use("/store", store);
 store.get("/catalogs", CatalogController.list);
 store.post("/catalogs", CatalogController.create);
 store.get("/catalogs/:catalog_uid", CatalogController.read);
+store.put("/catalogs/:catalog_uid", CatalogController.update);
+store.delete("/catalogs/:catalog_uid", CatalogController.delete);
 
 /**
  * Base routes
