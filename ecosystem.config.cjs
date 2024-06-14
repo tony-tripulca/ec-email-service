@@ -1,8 +1,8 @@
 module.exports = {
   apps: [
     {
-      name: "ClassService.1.3",
-      namespace: "skhillz-class-service",
+      name: "CatalogServer.1.1",
+      namespace: "ec-catalog-service",
       script: "./src/index.js",
       watch: ["./src", "./src/*.js"],
       output: "./logs/out.log",
