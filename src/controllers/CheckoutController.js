@@ -10,7 +10,7 @@ export default {
    * @param {*} res
    */
   list: (req, res) => {
-    MongodbService.all("catalogs")
+    MongodbService.all("orders")
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
         Logger.out([JSON.stringify(msg)]);
@@ -38,7 +38,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.insert("catalogs", {
+    MongodbService.insert("orders", {
       name: req.body.name,
       description: req.body.description,
     })
@@ -69,7 +69,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.get("catalogs", req.params.catalog_uid)
+    MongodbService.get("orders", req.params.catalog_uid)
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
         Logger.out([JSON.stringify(msg)]);
@@ -99,7 +99,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.update("catalogs", req.params.catalog_uid, {
+    MongodbService.update("orders", req.params.catalog_uid, {
       name: req.body.name,
       description: req.body.description,
     })
@@ -130,7 +130,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.update("catalogs", req.params.catalog_uid, {
+    MongodbService.update("orders", req.params.catalog_uid, {
       active: false,
     })
       .then((response) => {

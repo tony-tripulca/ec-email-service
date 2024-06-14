@@ -1,4 +1,4 @@
-# Catalog API Service
+# Checkout API Service
 
 ## Local Machine Setup
 

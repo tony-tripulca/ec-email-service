@@ -3,7 +3,7 @@ import express from "express";
 import { app } from "./Server.js";
 
 import Controller from "./controllers/Controller.js";
-import CatalogController from "./controllers/CatalogController.js";
+import CheckoutController from "./controllers/CheckoutController.js/index.js";
 
 const store = express.Router();
 
@@ -11,11 +11,11 @@ const store = express.Router();
  * Store routes
  */
 app.use("/store", store);
-store.get("/catalogs", CatalogController.list);
-store.post("/catalogs", CatalogController.create);
-store.get("/catalogs/:catalog_uid", CatalogController.read);
-store.put("/catalogs/:catalog_uid", CatalogController.update);
-store.delete("/catalogs/:catalog_uid", CatalogController.delete);
+store.get("/orders", CheckoutController.list);
+store.post("/orders", CheckoutController.create);
+store.get("/orders/:order_uid", CheckoutController.read);
+store.put("/orders/:order_uid", CheckoutController.update);
+store.delete("/orders/:order_uid", CheckoutController.delete);
 
 /**
  * Base routes
