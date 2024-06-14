@@ -3,7 +3,7 @@ import express from "express";
 import { app } from "./Server.js";
 
 import Controller from "./controllers/Controller.js";
-import CheckoutController from "./controllers/CheckoutController.js/index.js";
+import CheckoutController from "./controllers/CheckoutController.js";
 
 const store = express.Router();
 

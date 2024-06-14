@@ -10,7 +10,16 @@ export default {
    * @param {*} res
    */
   list: (req, res) => {
-    MongodbService.all("orders")
+    let validation = Validator.check([
+      Validator.required(req.query, "username"),
+    ]);
+
+    if (!validation.pass) {
+      Logger.error([JSON.stringify(validation)]);
+      return res.status(422).json(validation.result);
+    }
+
+    MongodbService.select("orders", req.query.username)
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
         Logger.out([JSON.stringify(msg)]);
@@ -29,8 +38,10 @@ export default {
    */
   create: (req, res) => {
     let validation = Validator.check([
+      Validator.required(req.body, "username"),
       Validator.required(req.body, "name"),
       Validator.required(req.body, "description"),
+      Validator.required(req.body, "amount"),
     ]);
 
     if (!validation.pass) {
@@ -39,8 +50,10 @@ export default {
     }
 
     MongodbService.insert("orders", {
+      username: req.body.username,
       name: req.body.name,
       description: req.body.description,
+      amount: req.body.amount,
     })
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };

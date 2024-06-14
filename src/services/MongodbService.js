@@ -24,6 +24,27 @@ export default {
   },
 
   /**
+   * Select documents by given filter
+   * @param {*} table
+   * @returns
+   */
+  select: async (table, username) => {
+    const collection = database.collection(table);
+    const cursor = collection.find({
+      active: { $eq: true },
+      username: { $eq: username },
+    });
+
+    let results = [];
+
+    for await (let doc of cursor) {
+      results.push(doc);
+    }
+
+    return results;
+  },
+
+  /**
    * Get seletected document
    * @param {*} table
    * @param {*} uid
