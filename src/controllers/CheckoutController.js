@@ -54,6 +54,7 @@ export default {
       name: req.body.name,
       description: req.body.description,
       amount: req.body.amount,
+      paid: false,
     })
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
@@ -74,7 +75,7 @@ export default {
    */
   read: (req, res) => {
     let validation = Validator.check([
-      Validator.required(req.params, "catalog_uid"),
+      Validator.required(req.params, "order_uid"),
     ]);
 
     if (!validation.pass) {
@@ -82,7 +83,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.get("orders", req.params.catalog_uid)
+    MongodbService.get("orders", req.params.order_uid)
       .then((response) => {
         let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
         Logger.out([JSON.stringify(msg)]);
@@ -102,7 +103,7 @@ export default {
    */
   update: (req, res) => {
     let validation = Validator.check([
-      Validator.required(req.params, "catalog_uid"),
+      Validator.required(req.params, "order_uid"),
       Validator.required(req.body, "name"),
       Validator.required(req.body, "description"),
     ]);
@@ -112,7 +113,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.update("orders", req.params.catalog_uid, {
+    MongodbService.update("orders", req.params.order_uid, {
       name: req.body.name,
       description: req.body.description,
     })
@@ -135,7 +136,7 @@ export default {
    */
   delete: (req, res) => {
     let validation = Validator.check([
-      Validator.required(req.params, "catalog_uid"),
+      Validator.required(req.params, "order_uid"),
     ]);
 
     if (!validation.pass) {
@@ -143,7 +144,7 @@ export default {
       return res.status(422).json(validation.result);
     }
 
-    MongodbService.update("orders", req.params.catalog_uid, {
+    MongodbService.update("orders", req.params.order_uid, {
       active: false,
     })
       .then((response) => {
@@ -155,5 +156,43 @@ export default {
         Logger.error([JSON.stringify(error)]);
         return res.status(500).json(error);
       });
+  },
+
+  purchase: async (req, res) => {
+    /**
+     * Purchase statuses
+     * 1. pending
+     * 2. paid
+     */
+
+    let validation = Validator.check([
+      Validator.required(req.query, "username"),
+    ]);
+
+    if (!validation.pass) {
+      Logger.error([JSON.stringify(validation)]);
+      return res.status(422).json(validation.result);
+    }
+
+    try {
+      let orders = await MongodbService.select("orders", req.query.username);
+      let results = [];
+
+      orders.forEach(async (order) => {
+        results.push(
+          await MongodbService.update("orders", order._id, {
+            paid: true,
+            active: false,
+          })
+        );
+      });
+
+      let msg = { msg: `${req.method} ${req.originalUrl} ${res.statusCode}` };
+      Logger.out([JSON.stringify(msg)]);
+      return res.json(results);
+    } catch (error) {
+      Logger.error([JSON.stringify(error)]);
+      return res.status(500).json(error);
+    }
   },
 };

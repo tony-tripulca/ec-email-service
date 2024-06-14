@@ -16,6 +16,7 @@ store.post("/orders", CheckoutController.create);
 store.get("/orders/:order_uid", CheckoutController.read);
 store.put("/orders/:order_uid", CheckoutController.update);
 store.delete("/orders/:order_uid", CheckoutController.delete);
+store.post("/orders/purchase", CheckoutController.purchase);
 
 /**
  * Base routes
