@@ -156,14 +156,14 @@ export default {
       });
   },
 
+  /**
+   * Purchase all user orders
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
   purchase: async (req, res) => {
-    /**
-     * Purchase statuses
-     * 1. pending
-     * 2. paid
-     */
-
-    let validation = Validator.check([Validator.required(req.query, "email")]);
+    let validation = Validator.check([Validator.required(req.body, "email")]);
 
     if (!validation.pass) {
       Logger.error([JSON.stringify(validation)]);
@@ -171,7 +171,7 @@ export default {
     }
 
     try {
-      let orders = await MongodbService.select("orders", req.query.email);
+      let orders = await MongodbService.select("orders", req.body.email);
       let results = [];
 
       orders.forEach(async (order) => {
