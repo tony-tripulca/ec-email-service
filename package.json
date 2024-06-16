@@ -1,7 +1,7 @@
 {
-  "name": "ec-checkout-service",
+  "name": "ec-email-service",
   "version": "1.0.0",
-  "description": "Generic e-commerce checkout API service",
+  "description": "Generic e-commerce email API service",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tony-tripulca/ec-checkout-service.git"
+    "url": "git+ssh://git@github.com/tony-tripulca/ec-email-service.git"
   },
   "author": "tony-tripulca",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tony-tripulca/ec-checkout-service/issues"
+    "url": "https://github.com/tony-tripulca/ec-email-service/issues"
   },
-  "homepage": "https://github.com/tony-tripulca/ec-checkout-service#readme",
+  "homepage": "https://github.com/tony-tripulca/ec-email-service#readme",
   "dependencies": {
     "axios": "^1.7.2",
     "cors": "^2.8.5",
