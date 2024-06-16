@@ -11,6 +11,7 @@ const store = express.Router();
  * Store routes
  */
 app.use("/store", store);
+store.post("/send-email", EmailController.send);
 
 /**
  * Base routes
