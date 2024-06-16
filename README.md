@@ -2,8 +2,8 @@
 
 ## Local Machine Setup
 
-1. Clone the repo on your machine ```git clone git@github.com:tony-tripulca/ec-catalog-service.git```
-2. Go to the directory ```cd ec-catalog-service```
+1. Clone the repo on your machine ```git clone git@github.com:tony-tripulca/ec-checkout-service.git```
+2. Go to the directory ```cd ec-checkout-service```
 3. Use nodemon to watch for dev changes ```npm install -g nodemon```
 4. Install dependencies ```npm install```
 5. Start the service ```npm start```
@@ -12,7 +12,7 @@
 
 NOTE: Make sure that the local machine setup is working
 
-1. Got to the directory ```cd ec-catalog-service```
+1. Got to the directory ```cd ec-checkout-service```
 2. Install PM2 ```npm install -g pm2```
 3. Start the pm2 eco system ```pm2 start ecosystem.config.js```
 
